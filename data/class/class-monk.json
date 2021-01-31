@@ -1,0 +1,182 @@
+{
+	"class": [
+		{
+			"name": "Monk",
+			"source": "CRB",
+			"page": 155,
+			"HP": 10,
+			"keyAbility": "Strength or Dexterity",
+			"initialProficiencies": {
+				"perception": "T",
+				"fort": "E",
+				"ref": "E",
+				"will": "E",
+				"skills": {
+					"add": 4
+				},
+				"attacks": {
+					"t": [
+						"simple weapons",
+						"unarmed attacks"
+					]
+				},
+				"defenses": {
+					"u": [
+						"all armor"
+					],
+					"e": [
+						"unarmored defense"
+					]
+				},
+				"classDc": {
+					"prof": "T",
+					"entry": "Trained in monk class DC"
+				}
+			},
+			"advancement": {
+				"classFeats": [
+					1,
+					2,
+					4,
+					6,
+					8,
+					10,
+					12,
+					14,
+					16,
+					18,
+					20
+				],
+				"skillFeats": [
+					2,
+					4,
+					6,
+					8,
+					10,
+					12,
+					14,
+					16,
+					18,
+					20
+				],
+				"generalFeats": [
+					3,
+					7,
+					11,
+					15,
+					19
+				],
+				"ancestryFeats": [
+					5,
+					9,
+					13,
+					17
+				],
+				"skillIncrease": [
+					3,
+					5,
+					7,
+					9,
+					11,
+					13,
+					15,
+					17,
+					19
+				],
+				"abilityBoosts": [
+					5,
+					10,
+					15,
+					20
+				]
+			},
+			"classFeatures": [
+				"Ancestry and Background|Monk|CRB|1"
+			],
+			"subclasses": [
+			],
+			"flavor": [
+				"The strength of your fist flows from your mind and spirit. You seek perfection—honing your body into a flawless instrument and your mind into an orderly bastion of wisdom. You’re a fierce combatant renowned for martial arts skills and combat stances that grant you unique fighting moves. While the challenge of mastering many fighting styles drives you to great heights, you also enjoy meditating on philosophical questions and discovering new ways to obtain peace and enlightenment."
+			],
+			"fluff": [
+				{
+					"type": "pf2-h3",
+					"page": 155,
+					"name": "During Combat Encounters...",
+					"entries": [
+						"You speed into the fray, dodging or leaping past obstacles with acrobatic maneuvers. You strike opponents in a rapid flurry of attacks, using your bare fists or wielding specialized weapons that you mastered during your monastic training. Stances let you change up your combat style for different situations, and ki abilities allow you to perform mystic feats like healing yourself and soaring through the air."
+					]
+				},
+				{
+					"type": "pf2-h3",
+					"page": 155,
+					"name": "During social encounters...",
+					"entries": [
+						"Your perceptiveness lets you see through falsehoods, and your philosophical training provides insight into any situation."
+					]
+				},
+				{
+					"type": "pf2-h3",
+					"page": 155,
+					"name": "While exploring...",
+					"entries": [
+						"You climb up walls, dodge traps, overcome obstacles, and leap over pits. You usually stay toward the outside of the group to protect more vulnerable members, and you’re well suited to looking for danger or moving stealthily."
+					]
+				},
+				{
+					"type": "pf2-h3",
+					"page": 155,
+					"name": "In downtime...",
+					"entries": [
+						"You diligently exercise, eat healthy foods, meditate, and study various philosophies. You might also take up a craft that you strive to perfect."
+					]
+				},
+				{
+					"type": "pf2-h3",
+					"page": 155,
+					"name": "You Might...",
+					"entries": [
+						{
+							"type": "list",
+							"items": [
+								"Maintain a regimen of physical training and meditation.",
+								"Face adversity with a calm and measured approach, never panicking or succumbing to despair.",
+								"Look to the future for ways you can improve, while remaining at peace with your present self."
+							]
+						}
+					]
+				},
+				{
+					"type": "pf2-h3",
+					"page": 155,
+					"name": "Others Probably...",
+					"entries": [
+						{
+							"type": "list",
+							"items": [
+								"Marvel at your feats of physical prowess.",
+								"Think you’re more than a bit uptight, given your vows and tenets.",
+								"Come to you for philosophical advice."
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"classFeature": [
+		{
+			"name": "Ancestry and Background",
+			"source": "CRB",
+			"page": 156,
+			"className": "Monk",
+			"classSource": "CRB",
+			"level": 1,
+			"entries": [
+				"In addition to the abilities provided by your class at 1st level, you have the benefits of your selected ancestry and background, as described in Chapter 2."
+			]
+		}
+	],
+	"subclassFeature": [
+	]
+}

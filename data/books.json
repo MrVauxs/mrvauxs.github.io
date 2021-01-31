@@ -1,0 +1,111 @@
+{
+	"book": [
+		{
+			"name": "Core Rulebook",
+			"id": "CRB",
+			"source": "BRB",
+			"coverUrl": "img/covers/CRB.jpg",
+			"published": "2019-08-01",
+			"author": "Paizo Inc.",
+			"contents": [
+				{
+					"name": "Intro"
+				},
+				{
+					"name": "Introduction",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 1
+					}
+				},
+				{
+					"name": "Ancestries & Backgrounds",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 2
+					}
+				},
+				{
+					"name": "Classes",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 3
+					}
+				},
+				{
+					"name": "Skills",
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 4
+					}
+				},
+				{
+					"name": "Feats",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 5
+					}
+				},
+				{
+					"name": "Equipment",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 6
+					}
+				},
+				{
+					"name": "Spells",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 7
+					}
+				},
+				{
+					"name": "The Age of Lost Omens",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 8
+					}
+				},
+				{
+					"name": "Playing the Game",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 9
+					}
+				},
+				{
+					"name": "Game Mastering",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 10
+					}
+				},
+				{
+					"name": "Crafting & Treasure",
+					"headers": [],
+					"ordinal": {
+						"type": "chapter",
+						"identifier": 11
+					}
+				},
+				{
+					"name": "Conditions Appendix",
+					"ordinal": {
+						"type": "appendix",
+						"identifier": "A"
+					}
+				}
+			]
+		}
+	]
+}

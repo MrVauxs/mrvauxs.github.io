@@ -1,0 +1,111 @@
+{
+	"_meta": {
+		"internalCopies": [
+			"deity"
+		]
+	},
+	"deity": [
+		{
+			"name": "Asmodeus",
+			"altNames": [
+				"The Prince of Darkness"
+			],
+			"pantheon": "Golarion",
+			"source": "CRB",
+			"page": 437,
+			"alignment": [
+				"LE"
+			],
+			"followerAlignment": [
+				"LE"
+			],
+			"edicts": [
+				"negotiate contracts to your best advantage",
+				"rule tyrannically and torture weaker beings",
+				"show subservience to your betters"
+			],
+			"anathema": [
+				"break a contract",
+				"free a slave",
+				"insult Asmodeus by showing mercy to your enemies"
+			],
+			"devoteeBenefits": {
+				"font": "harm",
+				"skill": "Deception",
+				"weapon": "mace",
+				"domains": [
+					"confidence",
+					"fire",
+					"trickery",
+					"tyranny"
+				],
+				"spells": {
+					"1": [
+						"charm"
+					],
+					"3": [
+						"agonizing despair|APG"
+					],
+					"4": [
+						"suggestion"
+					],
+					"6": [
+						"mislead"
+					]
+				}
+			},
+			"info": [
+				"The Prince of Darkness reigns over contracts, pride, slavery, and tyranny, and he delights in tempting mortals to the path of evil. He promotes strict hierarchies where everyone knows their place, and he takes advantage of order for his own selfish benefit."
+			],
+			"intercession": {
+				"source": "LOGM",
+				"page": 15,
+				"flavor": [
+					"Asmodeus tends to offer his gifts to entice those on the precipice of yielding to his vile temptations. His curses come most often in response to those who break contracts in his name, or commit other personal insults."
+				],
+				"boon": {
+					"Minor Boon": [
+						"Pleased by your talent for manipulation, Asmodeus amplifies your skills. Once, when you fail at the Diplomacy check to make a significant or consequential Request, you can cast {@spell suggestion} on the target of your Request, suggesting the same course of action. This is a divine innate spell."
+					],
+					"Moderate Boon": [
+						"Your eyes glow red like embers and your skin takes on a crimson tone. You gain darkvision and fire resistance 5."
+					],
+					"Major Boon": [
+						"Asmodeus helps enforce your bargains and contracts. When a creature enters a bargain or contract with you, uncoerced and of its own free will, it can’t voluntarily violate its side of the bargain as long as you uphold your side. You can always choose to violate the bargain yourself, but if you do, the creature is no longer bound to fulfill its part."
+					]
+				},
+				"curse": {
+					"Minor Curse": [
+						"Asmodeus’s flames burn you with great malice. You gain weakness 5 to fire."
+					],
+					"Moderate Curse": [
+						"Asmodeus forces your compliance. You can’t voluntarily back out of an agreement or contract or go back on your word, though you need follow only the letter of the agreement, not the spirit."
+					],
+					"Major Curse": [
+						"Asmodeus has taken note of the chaos you have wrought. You receive an ancient wound that feels older than time itself. You become permanently {@condition drained||drained 4}, and nothing short of another intercession can remove the condition. Your wound aches fiercely whenever you perform a particularly chaotic act, causing you to become {@condition sickened||sickened 1}."
+					]
+				}
+			},
+			"lore": [
+				{
+					"type": "pf2-h1",
+					"name": "Asmodeus",
+					"source": "LOGM",
+					"page": 14,
+					"entries": [
+						{
+							"type": "pf2-h3",
+							"name": "The Prince of Darkness",
+							"source": "LOGM",
+							"page": 14,
+							"entries": [
+								"LE god of contracts, pride, slavery and tyranny",
+								"Asmodeus is the First, the Dark Prince, the lord of darkness and law, and the ruler of the plane of Hell..."
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
