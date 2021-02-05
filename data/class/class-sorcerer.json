@@ -412,7 +412,7 @@
 			"classSource": "CRB",
 			"level": 2,
 			"entries": [
-				"At 1st level and every level thereafter, you gain a skill feat. Skill feats can be found in Chapter 5 and have the skill trait."
+				"At 1st level and every level thereafter, you gain a {@filter skill feat|feats|source=null|type=skill}. Skill feats can be found in Chapter 5 and have the skill trait."
 			]
 		},
 		{
@@ -434,7 +434,7 @@
 			"classSource": "CRB",
 			"level": 3,
 			"entries": [
-				"At 3rd level and every 4 levels thereafter, you gain a general feat. General feats are listed in Chapter 5."
+				"At 3rd level and every 4 levels thereafter, you gain a {@filter general feat|feats|source=null|type=general}. General feats are listed in Chapter 5."
 			]
 		},
 		{
@@ -621,8 +621,9 @@
 					"entries": [
 						"Something speaks to you from beyond the stars or below the earth. Ancient and unknowable, this alien influence presses against your mind.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -635,7 +636,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Intimidation, Occultism"
+										"{@skill Intimidation}, {@skill Occultism}"
 									]
 								},
 								{
@@ -681,8 +682,9 @@
 					"entries": [
 						"One of your forebears hailed from a celestial realm, or your ancestors’ devotion led to their lineage being blessed.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -695,7 +697,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Diplomacy, Religion"
+										"{@skill Diplomacy}, {@skill Religion}"
 									]
 								},
 								{
@@ -741,8 +743,9 @@
 					"entries": [
 						"Demons debase all they touch. One of your ancestors fell victim to their corruption, and you are burdened by that sin.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -755,7 +758,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Intimidation, Religion"
+										"{@skill Intimidation}, {@skill Religion}"
 									]
 								},
 								{
@@ -776,7 +779,7 @@
 									"type": "item",
 									"name": "Blood Magic",
 									"entries": [
-										"The corruption of sin weakens a target’s defenses or makes you more imposing. Either a target takes a –1 status penalty to AC for 1 round, or you gain a +1 status bonus to Intimidation checks for 1 round."
+										"The corruption of sin weakens a target’s defenses or makes you more imposing. Either a target takes a –1 status penalty to AC for 1 round, or you gain a +1 status bonus to {@skill Intimidation} checks for 1 round."
 									]
 								}
 							]
@@ -801,8 +804,9 @@
 					"entries": [
 						"Devils are evil with a silver tongue, and one of your ancestors dallied in darkness or made an infernal pact.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -815,7 +819,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Deception, Religion"
+										"{@skill Deception}, {@skill Religion}"
 									]
 								},
 								{
@@ -836,7 +840,7 @@
 									"type": "item",
 									"name": "Blood Magic",
 									"entries": [
-										"Hellfire scorches a target or fills your tongue with lies. Either a target takes 1 fire damage per spell level (if the spell already deals initial fire damage, combine this with the spell’s initial damage before determining weaknesses and resistances), or you gain a +1 status bonus to Deception checks for 1 round."
+										"Hellfire scorches a target or fills your tongue with lies. Either a target takes 1 fire damage per spell level (if the spell already deals initial fire damage, combine this with the spell’s initial damage before determining weaknesses and resistances), or you gain a +1 status bonus to {@skill Deception} checks for 1 round."
 									]
 								}
 							]
@@ -861,8 +865,9 @@
 					"entries": [
 						"The blood of dragons flows through your veins. These beasts are both fearsome in combat and skilled at magic.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -875,7 +880,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Arcana, Intimidation"
+										"{@skill Arcana}, {@skill Intimidation}"
 									]
 								},
 								{
@@ -928,8 +933,9 @@
 					"entries": [
 						"A genie ancestor or some other elemental influence has imbued your blood with primal fury, affecting how the bloodline spells and granted spells marked with an asterisk (*), as well as your blood magic, function.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -942,7 +948,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Intimidation, Nature"
+										"{@skill Intimidation}, {@skill Nature}"
 									]
 								},
 								{
@@ -963,7 +969,7 @@
 									"type": "item",
 									"name": "Blood Magic",
 									"entries": [
-										"Elemental energy surrounds you or a target. Either you gain a +1 status bonus to Intimidation checks for 1 round, or a target takes 1 damage per spell level. The damage is bludgeoning or fire, according to your elemental type (see below). If the spell already deals that type of damage, combine it with the spell’s initial damage before determining weaknesses and resistances."
+										"Elemental energy surrounds you or a target. Either you gain a +1 status bonus to {@skill Intimidation} checks for 1 round, or a target takes 1 damage per spell level. The damage is bludgeoning or fire, according to your elemental type (see below). If the spell already deals that type of damage, combine it with the spell’s initial damage before determining weaknesses and resistances."
 									]
 								}
 							]
@@ -995,8 +1001,9 @@
 					"entries": [
 						"Fey whimsy or a tryst in a moonlit grove put the bewitching magic of the First World into your family’s bloodline.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -1009,7 +1016,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Deception, Nature"
+										"{@skill Deception}, {@skill Nature}"
 									]
 								},
 								{
@@ -1055,8 +1062,9 @@
 					"entries": [
 						"A hag long ago cursed your family, or you are a descendant of a hag or changeling, and their accursed corruption infests your blood and soul.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -1069,7 +1077,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Deception, Occultism"
+										"{@skill Deception}, {@skill Occultism}"
 									]
 								},
 								{
@@ -1115,8 +1123,9 @@
 					"entries": [
 						"One of your ancestors was a mortal who mastered magic. Such magical blood can remain latent for generations, but in you it manifested in full.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -1129,7 +1138,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Arcana, Society"
+										"{@skill Arcana}, {@skill Society}"
 									]
 								},
 								{
@@ -1175,8 +1184,9 @@
 					"entries": [
 						"The touch of undeath runs through your blood. Your family tree might contain powerful undead, like a vampire, or perhaps you died and returned a bit different.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -1189,7 +1199,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Intimidation, Religion"
+										"{@skill Intimidation}, {@skill Religion}"
 									]
 								},
 								{
@@ -1235,8 +1245,9 @@
 					"entries": [
 						"Through lineage, magic, or wishes made real, the blood of a noble genie flows through your veins.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -1249,7 +1260,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Arcana, Deception"
+										"{@skill Arcana}, {@skill Deception}"
 									]
 								},
 								{
@@ -1270,7 +1281,7 @@
 									"type": "item",
 									"name": "Blood Magic",
 									"entries": [
-										"Your  spellcasting  warps  reality  and  distracts  your foes. Either you gain a +1 status bonus to Deception checks for 1 round, or a target takes a –1 status penalty to Perception for 1 round."
+										"Your  spellcasting  warps  reality  and  distracts  your foes. Either you gain a +1 status bonus to {@skill Deception} checks for 1 round, or a target takes a –1 status penalty to Perception for 1 round."
 									]
 								}
 							]
@@ -1343,8 +1354,9 @@
 					"entries": [
 						"One of your ancestors was inspired by a nymph, or perhaps was a nymph themself, and now the beauty of nature lives in you.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -1357,7 +1369,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Diplomacy, Nature"
+										"{@skill Diplomacy}, {@skill Nature}"
 									]
 								},
 								{
@@ -1378,7 +1390,7 @@
 									"type": "item",
 									"name": "Blood Magic",
 									"entries": [
-										"Nymph grace accentuates your movements and distracts your foes, either granting you a +1 status bonus to Diplomacy checks for 1 round or imposing a –1 status penalty on one target's Will saves for 1 round."
+										"Nymph grace accentuates your movements and distracts your foes, either granting you a +1 status bonus to {@skill Diplomacy} checks for 1 round or imposing a –1 status penalty on one target's Will saves for 1 round."
 									]
 								}
 							]
@@ -1403,8 +1415,9 @@
 					"entries": [
 						"For good or ill, your ancestors' deeds drew the attention of psychopomps, or you might somehow count one in your family tree. The presence of these shepherds of souls and enemies of undeath has left an indelible mark on you.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -1417,7 +1430,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Intimidation, Religion"
+										"{@skill Intimidation}, {@skill Religion}"
 									]
 								},
 								{
@@ -1463,8 +1476,9 @@
 					"entries": [
 						"Whether due to a velstrac's manipulations or a planar jaunt gone horribly wrong, your bloodline was infused with a vein of shadow.",
 						{
-							"type": "list",
-							"style": "list-hang-notitle",
+							"type": "pf2-options",
+					"style": "pf2-p",
+					"skipSort": true,
 							"items": [
 								{
 									"type": "item",
@@ -1477,7 +1491,7 @@
 									"type": "item",
 									"name": "Bloodline Skills",
 									"entries": [
-										"Occultism, Stealth"
+										"{@skill Occultism}, {@skill Stealth}"
 									]
 								},
 								{
@@ -1498,7 +1512,7 @@
 									"type": "item",
 									"name": "Blood Magic",
 									"entries": [
-										"Shadows grow deeper around you or one target, either granting a +1 status bonus to Stealth or imposing a –1 status penalty to Perception for 1 round."
+										"Shadows grow deeper around you or one target, either granting a +1 status bonus to {@skill Stealth} or imposing a –1 status penalty to Perception for 1 round."
 									]
 								}
 							]

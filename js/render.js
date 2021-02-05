@@ -346,6 +346,9 @@ function Renderer () {
 				case "pf2-title":
 					this._renderPf2Title(entry, textStack, meta, options);
 					break;
+				case "pf2-options":
+					this._renderPf2Options(entry, textStack, meta, options);
+					break;
 				// recursive
 				case "entries":
 					this._renderEntries(entry, textStack, meta, options);
@@ -1217,6 +1220,7 @@ function Renderer () {
 			this._handleTrackTitles(entry.name);
 			textStack[0] += `<p class="pf2-h1" data-title-index="${this._headerIndex++}" ${this._getEnumeratedTitleRel(entry.name)}><span class="entry-title-inner">${entry.name}</span></p>`;
 		}
+		this._firstSection = false;
 		if (entry.entries) {
 			const len = entry.entries.length;
 			for (let i = 0; i < len; ++i) {
@@ -1270,6 +1274,7 @@ function Renderer () {
 			this._handleTrackTitles(entry.name);
 			textStack[0] += `<p class="pf2-h2 rd__h ${this._firstSection ? "p-0" : ""}" data-title-index="${this._headerIndex++}" ${this._getEnumeratedTitleRel(entry.name)}><span class="entry-title-inner">${entry.name}</span></p>`;
 		}
+		this._firstSection = false;
 		if (entry.entries) {
 			const len = entry.entries.length;
 			for (let i = 0; i < len; ++i) {
@@ -1296,6 +1301,7 @@ function Renderer () {
 			if (entry.level) textStack[0] += `<span class="pf2-h3--lvl">${Parser.getOrdinalForm(entry.level)}</span>`;
 			textStack[0] += `</p>`;
 		}
+		this._firstSection = false;
 		if (entry.entries) {
 			const len = entry.entries.length;
 			for (let i = 0; i < len; ++i) {
@@ -1319,6 +1325,7 @@ function Renderer () {
 			this._handleTrackTitles(entry.name);
 			textStack[0] += `<p class="pf2-h4 rd__h ${this._firstSection ? "p-0" : ""}" data-title-index="${this._headerIndex++}" ${this._getEnumeratedTitleRel(entry.name)}><span class="entry-title-inner">${entry.name}</span></p>`;
 		}
+		this._firstSection = false;
 		if (entry.entries) {
 			const len = entry.entries.length;
 			for (let i = 0; i < len; ++i) {
@@ -1342,6 +1349,7 @@ function Renderer () {
 			this._handleTrackTitles(entry.name);
 			textStack[0] += `<p class="pf2-h5 rd__h ${this._firstSection ? "mt-0" : ""}" data-title-index="${this._headerIndex++}" ${this._getEnumeratedTitleRel(entry.name)}><span class="entry-title-inner">${entry.name}</span></p>`;
 		}
+		this._firstSection = false;
 		if (entry.entries) {
 			const len = entry.entries.length;
 			for (let i = 0; i < len; ++i) {
@@ -1575,6 +1583,15 @@ function Renderer () {
 		textStack[0] += `</div>`;
 
 		this._lastDepthTrackerSource = cachedLastDepthTrackerSource;
+	};
+
+	this._renderPf2Options = function (entry, textStack, meta, options) {
+		if (!entry.items || !entry.items.length) return;
+		if (!entry.skipSort) entry.items = entry.items.sort((a, b) => a.name && b.name ? SortUtil.ascSort(a.name, b.name) : a.name ? -1 : b.name ? 1 : 0);
+		const renderer = Renderer.get();
+		entry.items.forEach(it => {
+			textStack[0] += `<p class="${entry.style ? entry.style : "pf2-book__option"}">${it.name ? `<strong>${it.name}: </strong>` : ""}${renderer.render(it.entry)}</p>`;
+		});
 	};
 
 	this._renderInset = function (entry, textStack, meta, options) {
@@ -2159,6 +2176,11 @@ function Renderer () {
 				this._recursiveRender(text, textStack, meta);
 				textStack[0] += `</u>`;
 				break;
+			case "@sup":
+			textStack[0] += `<sup>`;
+			this._recursiveRender(text, textStack, meta);
+			textStack[0] += `</sup>`;
+			break;
 			case "@note":
 				textStack[0] += `<i class="ve-muted">`;
 				this._recursiveRender(text, textStack, meta);
@@ -3866,6 +3888,15 @@ Renderer.utils = {
 		$td.fastSetHtml(renderedText);
 	},
 
+	async pGetQuickRules (prop) {
+		const data = await DataUtil.loadJSON(`${Renderer.get().baseUrl}data/quickrules.json`);
+		const renderer = Renderer.get().setFirstSection(true);
+		const toRender = data[prop];
+		const textStack = [""];
+		renderer.recursiveRender(toRender.entries, textStack, {depth: 1}, {prefix: "<p class='pf2-p'>", suffix: "</p>"});
+		return $$`${textStack.join("")}${Renderer.utils.getPageP(toRender)}`;
+	},
+
 	HTML_NO_INFO: "<i>No information available.</i>",
 	HTML_NO_IMAGES: "<i>No images available.</i>",
 
@@ -4266,7 +4297,7 @@ Renderer.affliction = {
 		const renderer = Renderer.get();
 		const renderStack = [];
 		renderer.setFirstSection(true);
-		const rLvl = isNaN(Number(affliction.level)) ? `, ${affliction.level}` : affliction.level;
+		const rLvl = isNaN(Number(affliction.level)) ? `, ${affliction.level}` : ` ${affliction.level}`;
 
 		renderStack.push(`${Renderer.utils.getExcludedDiv(affliction, affliction.__prop || affliction._type, UrlUtil.PG_AFFLICTIONS)}`)
 		renderStack.push(`
@@ -4348,35 +4379,6 @@ Renderer.background = {
 			fluffUrl: "data/fluff-backgrounds.json",
 			fluffProp: "backgroundFluff",
 		});
-	},
-};
-
-Renderer.optionalfeature = {
-	getListPrerequisiteLevelText (prerequisites) {
-		if (!prerequisites || !prerequisites.some(it => it.level)) return "\u2014";
-		const levelPart = prerequisites.find(it => it.level).level;
-		return levelPart.level || levelPart;
-	},
-
-	getPreviouslyPrintedText (it) {
-		return it.previousVersion ? `<tr><td colspan="6"><p>${Renderer.get().render(`{@i An earlier version of this ${Parser.optFeatureTypeToFull(it.featureType)} is available in }${Parser.sourceJsonToFull(it.previousVersion.source)} {@i as {@optfeature ${it.previousVersion.name}|${it.previousVersion.source}}.}`)}</p></td></tr>` : ""
-	},
-
-	getCompactRenderedString (it) {
-		const renderer = Renderer.get();
-		const renderStack = [];
-
-		renderStack.push(`
-			${Renderer.utils.getExcludedTr(it, "optionalfeature", UrlUtil.PG_COMPANIONS_FAMILIARS)}
-			${Renderer.utils.getNameTr(it, {page: UrlUtil.PG_COMPANIONS_FAMILIARS})}
-			<tr class="text"><td colspan="6">
-			${it.prerequisite ? `<p><i>${Renderer.utils.getPrerequisiteText(it.prerequisite)}</i></p>` : ""}
-		`);
-		renderer.recursiveRender({entries: it.entries}, renderStack, {depth: 1});
-		renderStack.push(`</td></tr>`);
-		renderStack.push(Renderer.optionalfeature.getPreviouslyPrintedText(it));
-
-		return renderStack.join("");
 	},
 };
 
@@ -4800,7 +4802,7 @@ Renderer.hazard = {
 		}
 		if (hazard.actions) {
 			hazard.actions.forEach(a => {
-				if (a.type === "ability") renderer.recursiveRender(a, renderStack, {depth: 1}, {isAbility: true});
+				if (a.type === "ability") renderStack.push(Renderer.hazard.getRenderedAbility(a));
 				else {
 					renderStack.push(`<p class="pf2-stat__section">`);
 					renderStack.push(`<span><strong>${a.range} </strong>`);
@@ -4829,7 +4831,7 @@ Renderer.hazard = {
 			renderStack.push(Renderer.utils.getDividerDiv());
 			hazard.routine.forEach((entry, idx) => {
 				if (idx !== 0) {
-					if (typeof entry === "object") renderer.recursiveRender(entry, renderStack, {depth: 1});
+					if (typeof entry === "object") renderStack.push(Renderer.hazard.getRenderedAbility(entry));
 					else renderer.recursiveRender(entry, renderStack, {depth: 1}, {prefix: `<p class="pf2-stat__text--wide">`, suffix: "</p>"});
 				} else renderStack.push(`<p class="pf2-stat__text--wide"><strong>Routine </strong>${renderer.render(entry)}</p>`);
 			});
@@ -4842,6 +4844,32 @@ Renderer.hazard = {
 		}
 		renderStack.push(Renderer.utils.getPageP(hazard))
 		return renderStack.join("")
+	},
+
+	getRenderedAbility (ability, options) {
+		options = options || {};
+
+		const renderer = Renderer.get();
+		const entryStack = [];
+		renderer.recursiveRender(ability.entries, entryStack, {depth: 2}, {isAbility: true});
+
+		let trts = []
+		if (ability.traits != null && ability.traits.length) {
+			ability.traits.forEach((t) => {
+				let traitname = Parser.getTraitName(t)
+				trts.push(Renderer.get().render(`{@trait ${traitname}|${Parser.TRAITS_TO_TRAITS_SRC[traitname]}|${t}}`))
+			});
+		}
+
+		return `<p class="pf2-stat__section"><span><strong>${ability.name} </strong>
+					${ability.activity ? renderer.render(ability.activity.entry) : ""}
+					${trts.length ? `(${trts.join(", ")}); ` : ""}
+					${ability.frequency ? `<strong>Frequency </strong>${renderer.render(ability.frequency)}` : ""}
+					${ability.requirements ? `<strong>Requirements </strong>${renderer.render(ability.requirements)}` : ""}
+					${ability.trigger ? `<strong>Trigger </strong>${renderer.render(ability.trigger)}` : ""}
+					${ability.frequency || ability.requirements || ability.trigger ? "<strong>Effect </strong>" : ""}
+					${entryStack.join("")}
+					</span></p>`;
 	},
 };
 
@@ -4911,21 +4939,21 @@ Renderer.creature = {
 		} else return ""
 	},
 
-	getAbilityMods (cr) {
+	getAbilityMods (mods) {
 		let renderStack = [];
 		renderStack.push(`<p class="pf2-stat__section">`)
 		renderStack.push(`<span><strong>Str </strong></span>`)
-		renderStack.push(Renderer.get().render(`{@d20 ${cr.ability_modifiers.Str}||Strength}`))
+		renderStack.push(Renderer.get().render(`{@d20 ${mods.Str}||Strength}`))
 		renderStack.push(`<span>, <strong>Dex </strong></span>`)
-		renderStack.push(Renderer.get().render(`{@d20 ${cr.ability_modifiers.Dex}||Dexterity}`))
+		renderStack.push(Renderer.get().render(`{@d20 ${mods.Dex}||Dexterity}`))
 		renderStack.push(`<span>, <strong>Con </strong></span>`)
-		renderStack.push(Renderer.get().render(`{@d20 ${cr.ability_modifiers.Con}||Constitution}`))
+		renderStack.push(Renderer.get().render(`{@d20 ${mods.Con}||Constitution}`))
 		renderStack.push(`<span>, <strong>Int </strong></span>`)
-		renderStack.push(Renderer.get().render(`{@d20 ${cr.ability_modifiers.Int}||Intelligence}`))
+		renderStack.push(Renderer.get().render(`{@d20 ${mods.Int}||Intelligence}`))
 		renderStack.push(`<span>, <strong>Wis </strong></span>`)
-		renderStack.push(Renderer.get().render(`{@d20 ${cr.ability_modifiers.Wis}||Wisdom}`))
+		renderStack.push(Renderer.get().render(`{@d20 ${mods.Wis}||Wisdom}`))
 		renderStack.push(`<span>, <strong>Cha </strong></span>`)
-		renderStack.push(Renderer.get().render(`{@d20 ${cr.ability_modifiers.Cha}||Charisma}`))
+		renderStack.push(Renderer.get().render(`{@d20 ${mods.Cha}||Charisma}`))
 		renderStack.push(`</p>`)
 		return renderStack.join("")
 	},
@@ -5032,9 +5060,9 @@ Renderer.creature = {
 			renderStack.push(`<p class="pf2-stat__section">`)
 			renderStack.push(`<span><strong>${attack.range} </strong>`)
 			renderStack.push(Renderer.get().render(`{@as 1} `))
-			renderStack.push(`${attack.name} `)
+			renderStack.push(`${attack.name}`)
 			renderStack.push(`</span>`)
-			renderStack.push(Renderer.get().render(`{@hit ${attack.attack}||${attack.name.uppercaseFirst()} `))
+			if (attack.attack != null) renderStack.push(Renderer.get().render(` {@hit ${attack.attack}||${attack.name.uppercaseFirst()} `))
 			renderStack.push(`<span>`)
 			if (attack.traits != null) {
 				let traits = []
@@ -5130,41 +5158,28 @@ Renderer.creature = {
 
 	getCompactRenderedString (cr, renderer, options) {
 		options = options || {};
-		renderer = renderer || Renderer.get();
-
-		let renderStack = []
-
 		const traits = (cr.rarity === "Common" ? [] : [cr.rarity]).concat([cr.alignment]).concat([cr.size]).concat(cr.traits.concat(cr.creature_type).sort())
 
-		renderStack.push(`
-			${Renderer.utils.getExcludedDiv(cr, "creature", UrlUtil.PG_BESTIARY)}
+		return $$`<div class="pf2-stat">${Renderer.utils.getExcludedDiv(cr, "creature", UrlUtil.PG_BESTIARY)}
 			${Renderer.utils.getNameDiv(cr, {page: UrlUtil.PG_BESTIARY})}
 			${Renderer.utils.getDividerDiv()}
 			${Renderer.utils.getTraitsDiv(traits)}
 			${Renderer.creature.getPerception(cr)}
 			${Renderer.creature.getLanguages(cr)}
 			${Renderer.creature.getSkills(cr)}
-			${Renderer.creature.getAbilityMods(cr)}`)
-		cr.abilities_interactive.forEach((ab) => {
-			renderer.recursiveRender(ab, renderStack, {depth: 1})
-		})
-		renderStack.push(`${Renderer.creature.getItems(cr)}
+			${Renderer.creature.getAbilityMods(cr.ability_modifiers)}
+			${cr.abilities_interactive.map(it => Renderer.creature.getRenderedAbility(it))}
+			${Renderer.creature.getItems(cr)}
 			${Renderer.utils.getDividerDiv()}
-			${Renderer.creature.getDefenses(cr)}`)
-		cr.abilities_automatic.forEach((ab) => {
-			renderer.recursiveRender(ab, renderStack, {depth: 1})
-		})
-		renderStack.push(`${Renderer.utils.getDividerDiv()}
+			${Renderer.creature.getDefenses(cr)}
+			${cr.abilities_automatic.map(it => Renderer.creature.getRenderedAbility(it))}
+			${Renderer.utils.getDividerDiv()}
 			${Renderer.creature.getSpeed(cr)}
 			${Renderer.creature.getAttacks(cr)}
 			${Renderer.creature.getSpellcasting(cr)}
-			${Renderer.creature.getRituals(cr)}`)
-		cr.abilities_active.forEach((ab) => {
-			renderer.recursiveRender(ab, renderStack, {depth: 1})
-		})
-		renderStack.push(Renderer.utils.getPageP(cr));
-
-		return (renderStack.join(""))
+			${Renderer.creature.getRituals(cr)}
+			${cr.abilities_active.map(it => Renderer.creature.getRenderedAbility(it))}
+			${Renderer.utils.getPageP(cr)}</div>`;
 	},
 
 	getRenderedAbility (ability, options) {
@@ -6217,7 +6232,7 @@ Renderer.item = {
 		if (opts.baseItems) {
 			baseItems = opts.baseItems;
 		} else {
-			opts.baseItemsUrl = opts.baseItemsUrl || `${Renderer.get().baseUrl}data/items-base.json`;
+			opts.baseItemsUrl = opts.baseItemsUrl || `${Renderer.get().baseUrl}data/items/items-base.json`;
 			const baseItemData = await DataUtil.loadJSON(opts.baseItemsUrl);
 			Renderer.item._addBasePropertiesAndTypes(baseItemData);
 			baseItems = [...baseItemData.baseitem, ...(opts.additionalBaseItems || [])];
@@ -6522,7 +6537,7 @@ Renderer.item = {
 	populatePropertyAndTypeReference: () => {
 		if (Renderer.item._isRefPopulated) return Promise.resolve();
 		return new Promise((resolve, reject) => {
-			DataUtil.loadJSON(`${Renderer.get().baseUrl}data/items-base.json`)
+			DataUtil.loadJSON(`${Renderer.get().baseUrl}data/items/items-base.json`)
 				.then(data => {
 					if (Renderer.item._isRefPopulated) {
 						resolve();
@@ -6654,8 +6669,9 @@ Renderer.table = {
 };
 
 Renderer.action = {
-	getCompactRenderedString (it) {
-		let renderStack = [""]
+	getCompactRenderedString (it, opts) {
+		opts = opts || {};
+		let renderStack = [""];
 		Renderer.get().setFirstSection(true).recursiveRender(it.entries, renderStack, {depth: 1}, {pf2StatFix: true})
 		return `
 		${Renderer.utils.getExcludedDiv(it, "action", UrlUtil.PG_ACTIONS)}
@@ -6664,7 +6680,7 @@ Renderer.action = {
 		${Renderer.utils.getTraitsDiv(it.traits || [])}
 		${Renderer.action.getSubHead(it)}
 		${renderStack.join("")}
-		${Renderer.utils.getPageP(it)}`;
+		${opts.noPage ? "" : Renderer.utils.getPageP(it)}`;
 	},
 	getSubHead (it) {
 		const renderStack = [];
@@ -6829,6 +6845,51 @@ Renderer.adventureBook = {
 		if (doThrowError) if (out.__BAD) throw new Error(`IDs were already in storage: ${out.__BAD.map(it => `"${it}"`).join(", ")}`);
 
 		return out;
+	},
+};
+
+Renderer.companionfamiliar = {
+	getRenderedString (it) {
+		if (it.type === "Companion") return Renderer.companion.getRenderedString(it);
+		if (it.type === "Familiar") return Renderer.familiar.getRenderedString(it);
+	},
+};
+
+Renderer.companion = {
+	getRenderedString (companion) {
+		const renderer = Renderer.get();
+		return $$`${Renderer.utils.getExcludedDiv(companion, "companion", UrlUtil.PG_COMPANIONS_FAMILIARS)}
+		${Renderer.utils.getNameDiv(companion, {type: "Companion"})}
+		${Renderer.utils.getDividerDiv()}
+		${Renderer.utils.getTraitsDiv(companion.traits)}
+		${companion.access ? `<p class="pf2-stat__section"><strong>Access </strong>${companion.access}</p>` : ""}
+		${(companion.traits && companion.traits.length) || companion.access ? Renderer.utils.getDividerDiv() : ""}
+		${companion.fluff ? `<p class="pf2-stat__section--wide">${renderer.render(companion.fluff)}</p>` : ""}
+		<p class="pf2-stat__section"><strong>Size </strong>${companion.size}</p>
+		${Renderer.creature.getAttacks(companion)}
+		${Renderer.creature.getAbilityMods(companion.abilityMod)}
+		<p class="pf2-stat__section"><strong>Hit Points </strong>${companion.HP}</p>
+		<p class="pf2-stat__section"><strong>Skill </strong>${renderer.render(`{@skill ${companion.skill}}`)}</p>
+		${Renderer.creature.getSpeed(companion)}
+		<p class="pf2-stat__section"><strong>Support Benefit </strong>${renderer.render(companion.support)}</p>
+		<p class="pf2-stat__section mb-4"><strong>Advanced Maneuver </strong>${companion.maneuver.name}</p>
+		${Renderer.action.getCompactRenderedString(companion.maneuver, {noPage: true})}
+		${Renderer.utils.getPageP(companion)}`;
+	},
+};
+
+Renderer.familiar = {
+	getRenderedString (familiar) {
+		return $$`${Renderer.utils.getExcludedDiv(familiar, "familiar", UrlUtil.PG_COMPANIONS_FAMILIARS)}
+		${Renderer.utils.getNameDiv(familiar, {type: "Familiar"})}
+		${Renderer.utils.getDividerDiv()}
+		${Renderer.utils.getTraitsDiv(familiar.traits)}
+		${familiar.alignment ? `<p class="pf2-stat__section"><strong>Alignment </strong>${familiar.alignment}</p>` : ""}
+		<p class="pf2-stat__section"><strong>Required Number of Abilities </strong>${familiar.requires}</p>
+		<p class="pf2-stat__section"><strong>Granted Abilities </strong>${familiar.granted.join(", ")}</p>
+		${Renderer.utils.getDividerDiv()}
+		${familiar.abilities.map(a => Renderer.creature.getRenderedAbility(a))}
+		${Renderer.utils.getPageP(familiar)}`;
 	},
 };
 
@@ -7872,7 +7933,7 @@ Renderer.hover = {
 			case UrlUtil.PG_FEATS:
 				return Renderer.hover._pCacheAndGet_pLoadSimple(page, source, hash, opts, "feats/feats-crb.json", "feat");
 			case UrlUtil.PG_COMPANIONS_FAMILIARS:
-				return Renderer.hover._pCacheAndGet_pLoadSimple(page, source, hash, opts, "optionalfeatures.json", "optionalfeature");
+				return Renderer.hover._pCacheAndGet_pLoadSimple(page, source, hash, opts, "companionsfamiliars.json", ["companion", "familiar"]);
 			case UrlUtil.PG_ANCESTRIES: {
 				const loadKey = UrlUtil.PG_ANCESTRIES;
 
@@ -8016,13 +8077,9 @@ Renderer.hover = {
 			case `fluff__${UrlUtil.PG_SPELLS}`:
 				return Renderer.hover._pCacheAndGet_pLoadMultiSourceFluff(page, source, hash, opts, `data/spells/`, "spellFluff");
 			case `fluff__${UrlUtil.PG_BACKGROUNDS}`:
-				return Renderer.hover._pCacheAndGet_pLoadSimpleFluff(page, source, hash, opts, "fluff-backgrounds.json", "backgroundFluff");
+				return Renderer.hover._pCacheAndGet_pLoadSimpleFluff(page, source, hash, opts, "data/backgrounds/fluff-backgrounds.json", "backgroundFluff");
 			case `fluff__${UrlUtil.PG_ITEMS}`:
 				return Renderer.hover._pCacheAndGet_pLoadSimpleFluff(page, source, hash, opts, "fluff-conditions.json", ["conditionFluff", "diseaseFluff"]);
-			case `fluff__${UrlUtil.PG_ANCESTRIES}`:
-				return Renderer.hover._pCacheAndGet_pLoadSimpleFluff(page, source, hash, opts, "fluff-ancestries.json", "raceFluff");
-			case `fluff__${UrlUtil.PG_LANGUAGES}`:
-				return Renderer.hover._pCacheAndGet_pLoadSimpleFluff(page, source, hash, opts, "fluff-languages.json", "languageFluff");
 				// endregion
 
 			// region props
@@ -8466,6 +8523,7 @@ Renderer.hover = {
 				return Renderer.hover.getGenericCompactRenderedString;
 			case UrlUtil.PG_QUICKREF:
 			case UrlUtil.PG_CLASSES:
+				// FIXME: Classes rendering
 				return Renderer.hover.getGenericCompactRenderedString;
 			case UrlUtil.PG_SPELLS:
 				return Renderer.spell.getCompactRenderedString;
@@ -8485,7 +8543,7 @@ Renderer.hover = {
 			case UrlUtil.PG_FEATS:
 				return Renderer.feat.getCompactRenderedString;
 			case UrlUtil.PG_COMPANIONS_FAMILIARS:
-				return Renderer.optionalfeature.getCompactRenderedString;
+				return Renderer.companionfamiliar.getRenderedString;
 			case UrlUtil.PG_ANCESTRIES:
 				return Renderer.ancestry.getCompactRenderedString;
 			case UrlUtil.PG_DEITIES:
@@ -8737,6 +8795,7 @@ Renderer._stripTagLayer = function (str) {
 					case "@strike":
 					case "@u":
 					case "@underline":
+					case "@sup":
 						return text;
 
 					case "@h":
