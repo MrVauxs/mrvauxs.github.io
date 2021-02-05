@@ -361,7 +361,7 @@
 			"classSource": "CRB",
 			"level": 1,
 			"entries": [
-				"Your bloodline provides you with incredible magical power. You can cast spells using the Cast a Spell activity, and you can supply material, somatic, and verbal components when casting spells (see Casting Spells). Because you're a sorcerer, you can usually replace material components with somatic components, so you don't need to use a material component pouch.",
+				"Your bloodline provides you with incredible magical power. You can cast spells using the {@action Cast a Spell} activity, and you can supply material, somatic, and verbal components when casting spells (see Casting Spells). Because you're a sorcerer, you can usually replace material components with somatic components, so you don't need to use a material component pouch.",
 				"Each day, you can cast up to three 1st-level spells. You must know spells to cast them, and you learn them via the spell repertoire class feature. The number of spells you can cast each day is called your spell slots.",
 				"As you increase in level as a sorcerer, your number of spells per day increases, as does the highest level of spells you can cast, as shown on Table 3–17: Sorcerer Spells per Day.",
 				"Some of your spells require you to attempt a spell attack roll to see how effective they are, or have your enemies roll against your spell DC (typically by attempting a saving throw). Since your key ability is Charisma, your spell attack rolls and spell DCs use your Charisma modifier. Details on calculating these statistics appear in Spell Attack Rolls.",
@@ -379,6 +379,354 @@
 					"name": "Cantrips",
 					"entries": [
 						"Some of your spells are cantrips. A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is automatically heightened to half your level rounded up—this is usually equal to the highest level of sorcerer spell slot you have. For example, as a 1st-level sorcerer, your cantrips are 1st-level spells, and as a 5th-level sorcerer, your cantrips are 3rd-level spells."
+					]
+				},
+				{
+					"type": "table",
+					"name": "Sorcerer Spells per Day",
+					"id": "3-17",
+					"spans": [
+						[
+							[
+								1,
+								2
+							],
+							[
+								2,
+								13
+							]
+						]
+					],
+					"labelRowIdx": [
+						0,
+						1
+					],
+					"cellStyles": [
+						{
+							"row": 0,
+							"col": 1,
+							"style": "text-center"
+						}
+					],
+					"colStyles": [
+						"",
+						"text-center",
+						"text-center",
+						"text-center",
+						"text-center",
+						"text-center",
+						"text-center",
+						"text-center",
+						"text-center",
+						"text-center",
+						"text-center",
+						"text-center"
+					],
+					"footStyles": [
+						"text-center"
+					],
+					"footnotes": [
+						"* The bloodline paragon class feature gives you a 10th-level spell slot that works a bit differently from other spell slots."
+					],
+					"rows": [
+						[
+							"Your",
+							"Spell Level"
+						],
+						[
+							"Level",
+							"Cantrips",
+							"1st",
+							"2nd",
+							"3rd",
+							"4th",
+							"5th",
+							"6th",
+							"7th",
+							"8th",
+							"9th",
+							"10th"
+						],
+						[
+							1,
+							5,
+							2,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							2,
+							5,
+							3,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							3,
+							5,
+							3,
+							2,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							4,
+							5,
+							3,
+							3,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							5,
+							5,
+							3,
+							3,
+							2,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							6,
+							5,
+							3,
+							3,
+							3,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							7,
+							5,
+							3,
+							3,
+							3,
+							2,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							8,
+							5,
+							3,
+							3,
+							3,
+							3,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							9,
+							5,
+							3,
+							3,
+							3,
+							3,
+							2,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							10,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							"—",
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							11,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							2,
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							12,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							"—",
+							"—",
+							"—",
+							"—"
+						],
+						[
+							13,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							2,
+							"—",
+							"—",
+							"—"
+						],
+						[
+							14,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							"—",
+							"—",
+							"—"
+						],
+						[
+							15,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							2,
+							"—",
+							"—"
+						],
+						[
+							16,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							"—",
+							"—"
+						],
+						[
+							17,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							2,
+							"—"
+						],
+						[
+							18,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							"—"
+						],
+						[
+							19,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							"1*"
+						],
+						[
+							20,
+							5,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							3,
+							"1*"
+						]
 					]
 				}
 			]
@@ -412,7 +760,7 @@
 			"classSource": "CRB",
 			"level": 2,
 			"entries": [
-				"At 1st level and every level thereafter, you gain a {@filter skill feat|feats|source=null|type=skill}. Skill feats can be found in Chapter 5 and have the skill trait."
+				"At 1st level and every level thereafter, you gain a {@filter skill feat|feats|type=skill}. Skill feats can be found in Chapter 5 and have the skill trait."
 			]
 		},
 		{
@@ -434,7 +782,7 @@
 			"classSource": "CRB",
 			"level": 3,
 			"entries": [
-				"At 3rd level and every 4 levels thereafter, you gain a {@filter general feat|feats|source=null|type=general}. General feats are listed in Chapter 5."
+				"At 3rd level and every 4 levels thereafter, you gain a {@filter general feat|feats|type=general}. General feats are listed in Chapter 5."
 			]
 		},
 		{
@@ -479,7 +827,7 @@
 			"classSource": "CRB",
 			"level": 5,
 			"entries": [
-				"In addition to the ancestry feat you started with, you gain an ancestry feat at 5th level and every 4 levels thereafter. The list of ancestry feats available to you can be found in your ancestry’s entry in Chapter 2."
+				"In addition to the ancestry feat you started with, you gain an {@filter ancestry feat|feats|type=ancestry} at 5th level and every 4 levels thereafter. The list of ancestry feats available to you can be found in your ancestry’s entry in Chapter 2."
 			]
 		},
 		{
@@ -629,7 +977,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter occult|spells|tradition=occult}"
+										"{@filter occult|spells||tradition=occult}"
 									]
 								},
 								{
@@ -690,7 +1038,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter divine|spells|tradition=divine}"
+										"{@filter divine|spells||tradition=divine}"
 									]
 								},
 								{
@@ -751,7 +1099,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter divine|spells|tradition=divine}"
+										"{@filter divine|spells||tradition=divine}"
 									]
 								},
 								{
@@ -812,7 +1160,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter divine|spells|tradition=divine}"
+										"{@filter divine|spells||tradition=divine}"
 									]
 								},
 								{
@@ -873,7 +1221,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter arcane|spells|tradition=arcane}"
+										"{@filter arcane|spells||tradition=arcane}"
 									]
 								},
 								{
@@ -941,7 +1289,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter primal|spells|tradition=primal}"
+										"{@filter primal|spells||tradition=primal}"
 									]
 								},
 								{
@@ -1009,7 +1357,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter primal|spells|tradition=primal}"
+										"{@filter primal|spells||tradition=primal}"
 									]
 								},
 								{
@@ -1070,7 +1418,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter occult|spells|tradition=occult}"
+										"{@filter occult|spells||tradition=occult}"
 									]
 								},
 								{
@@ -1131,7 +1479,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter arcane|spells|tradition=arcane}"
+										"{@filter arcane|spells||tradition=arcane}"
 									]
 								},
 								{
@@ -1192,7 +1540,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter divine|spells|tradition=divine}"
+										"{@filter divine|spells||tradition=divine}"
 									]
 								},
 								{
@@ -1253,7 +1601,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter arcane|spells|tradition=arcane}"
+										"{@filter arcane|spells||tradition=arcane}"
 									]
 								},
 								{
@@ -1362,7 +1710,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter primal|spells|tradition=primal}"
+										"{@filter primal|spells||tradition=primal}"
 									]
 								},
 								{
@@ -1423,7 +1771,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter divine|spells|tradition=divine}"
+										"{@filter divine|spells||tradition=divine}"
 									]
 								},
 								{
@@ -1484,7 +1832,7 @@
 									"type": "item",
 									"name": "Spell List",
 									"entries": [
-										"{@filter occult|spells|tradition=occult}"
+										"{@filter occult|spells||tradition=occult}"
 									]
 								},
 								{
