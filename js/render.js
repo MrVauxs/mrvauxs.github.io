@@ -763,7 +763,7 @@ function Renderer () {
 
 	this._renderTable = function (entry, textStack, meta, options) {
 		// TODO: implement rollable tables
-		const numCol = Math.max(...entry.rows.map(x => x.length))
+		const numCol = Math.max(...entry.rows.map(x => x.type === "multiRow" ? x.rows.map(y => y.length) : x.length).flat());
 		const gridTemplate = entry.colSizes ? entry.colSizes.map(x => `${String(x)}fr`).join(" ") : "1fr ".repeat(numCol)
 		textStack[0] += `<div class="${entry.style || "pf2-table"}${this._firstSection ? " mt-0" : ""}" style="grid-template-columns: ${gridTemplate}">`
 		if (entry.style && entry.style.includes("pf2-box__table--red")) {
@@ -794,44 +794,54 @@ function Renderer () {
 		const labelRowIdx = entry.labelRowIdx ? entry.labelRowIdx : [0];
 		let rowParity = 0;
 		let idxSpan = 0;
-		for (let idxRow = 0; idxRow < lenRows; ++idxRow) {
-			const row = entry.rows[idxRow]
-			const lenCol = row.length
 
-			if (lenCol === numCol) {
+		const renderRow = function (renderer, row, idxRow) {
+			const lenCol = row.length;
+			if (row.type === "multiRow") {
+				row.rows.forEach(r => {
+					renderRow(renderer, r, idxRow);
+					rowParity = (rowParity + 1) % 2;
+				});
+				rowParity = (rowParity + 1) % 2;
+			} else if (lenCol === numCol) {
 				for (let idxCol = 0; idxCol < lenCol; ++idxCol) {
-					let styles = this._renderTable_getStyles(entry, idxRow, idxCol, false, rowParity)
-					textStack[0] += `<div class="${styles}">`
-					this._recursiveRender(row[idxCol], textStack, meta);
-					textStack[0] += `</div>`
+					let styles = renderer._renderTable_getStyles(entry, idxRow, idxCol, false, rowParity);
+					textStack[0] += `<div class="${styles}">`;
+					renderer._recursiveRender(row[idxCol], textStack, meta);
+					textStack[0] += `</div>`;
 				}
 				if (labelRowIdx.includes(idxRow)) {
-					rowParity = 0
+					rowParity = 0;
 				} else {
-					rowParity = (rowParity + 1) % 2
+					rowParity = (rowParity + 1) % 2;
 				}
 			} else {
 				let last_end = 1;
 				for (let idxCol = 0; idxCol < lenCol; ++idxCol) {
-					let styles = this._renderTable_getStyles(entry, idxRow, idxCol, true, rowParity)
-					let span = entry.spans[idxSpan][idxCol]
+					let styles = renderer._renderTable_getStyles(entry, idxRow, idxCol, true, rowParity);
+					let span = entry.spans[idxSpan][idxCol];
 					if (last_end !== span[0]) {
-						textStack[0] += `<div class="${styles}" style="grid-column:${last_end}/${span[0]}"></div>`
+						textStack[0] += `<div class="${styles}" style="grid-column:${last_end}/${span[0]}"></div>`;
 					}
-					textStack[0] += `<div class="${styles}" style="grid-column:${span[0]}/${span[1]}">${row[idxCol]}</div>`
-					last_end = span[1]
+					textStack[0] += `<div class="${styles}" style="grid-column:${span[0]}/${span[1]}">${row[idxCol]}</div>`;
+					last_end = span[1];
 				}
 				if (labelRowIdx.includes(idxRow)) {
-					rowParity = 0
+					rowParity = 0;
 				} else {
-					rowParity = (rowParity + 1) % 2
+					rowParity = (rowParity + 1) % 2;
 				}
 				if (last_end !== numCol + 1) {
-					let styles = this._renderTable_getStyles(entry, idxRow, numCol, true, rowParity)
-					textStack[0] += `<div class="${styles}" style="grid-column:${last_end}/${lenCol}"></div>`
+					let styles = renderer._renderTable_getStyles(entry, idxRow, numCol, true, rowParity);
+					textStack[0] += `<div class="${styles}" style="grid-column:${last_end}/${lenCol}"></div>`;
 				}
 				idxSpan += 1;
 			}
+		};
+
+		for (let idxRow = 0; idxRow < lenRows; ++idxRow) {
+			const row = entry.rows[idxRow];
+			renderRow(this, row, idxRow);
 		}
 
 		if (entry.footnotes != null) {
@@ -1590,7 +1600,9 @@ function Renderer () {
 		if (!entry.skipSort) entry.items = entry.items.sort((a, b) => a.name && b.name ? SortUtil.ascSort(a.name, b.name) : a.name ? -1 : b.name ? 1 : 0);
 		const renderer = Renderer.get();
 		entry.items.forEach(it => {
-			textStack[0] += `<p class="${entry.style ? entry.style : "pf2-book__option"}">${it.name ? `<strong>${it.name}: </strong>` : ""}${renderer.render(it.entry)}</p>`;
+			const style = entry.style ? entry.style : "pf2-book__option";
+			textStack[0] += `<p class="${style}">${it.name ? `<strong>${it.name}: </strong>` : ""}${renderer.render(it.entries.shift())}</p>`;
+			it.entries.forEach(e => this._recursiveRender(e, textStack, meta, {prefix: `<p class="${style}">`, suffix: `</p>`}));
 		});
 	};
 
@@ -2177,10 +2189,10 @@ function Renderer () {
 				textStack[0] += `</u>`;
 				break;
 			case "@sup":
-			textStack[0] += `<sup>`;
-			this._recursiveRender(text, textStack, meta);
-			textStack[0] += `</sup>`;
-			break;
+				textStack[0] += `<sup>`;
+				this._recursiveRender(text, textStack, meta);
+				textStack[0] += `</sup>`;
+				break;
 			case "@note":
 				textStack[0] += `<i class="ve-muted">`;
 				this._recursiveRender(text, textStack, meta);
@@ -2210,8 +2222,14 @@ function Renderer () {
 				textStack[0] += `</span>`;
 				break;
 			}
-			case "@indent":
-				textStack[0] += `<span class="text-indent">`;
+			case "@indentFirst":
+				textStack[0] += `<span class="text-indent-first">`;
+				this._recursiveRender(text, textStack, meta);
+				textStack[0] += `</span>`;
+				break;
+			case "@indent": // FIXME: Deprecated
+			case "@indentSubsequent":
+				textStack[0] += `<span class="text-indent-subsequent">`;
 				this._recursiveRender(text, textStack, meta);
 				textStack[0] += `</span>`;
 				break;
@@ -4699,11 +4717,13 @@ Renderer.deity = {
 		const renderer = Renderer.get()
 		const b = deity.devoteeBenefits;
 		return `${renderer.render({type: "pf2-h4", name: "Devotee Benefits"})}
-				<p class="pf2-book__option mt-2"><strong>Divine Font </strong>${renderer.render(`{@spell ${b.font}}`)}</p>
-				<p class="pf2-book__option"><strong>Divine Skill </strong>${renderer.render(`{@skill ${b.skill}}`)}</p>
-				<p class="pf2-book__option"><strong>Favored Weapon </strong>${renderer.render(`{@item ${b.weapon}}`)}</p>
-				<p class="pf2-book__option"><strong>Domains </strong>${renderer.render(b.domains.join(", "))}</p>
-				<p class="pf2-book__option"><strong>Cleric Spells </strong>${renderer.render(Renderer.deity.getClericSpells(b.spells))}</p>`;
+			<p class="pf2-book__option mt-2"><strong>Divine Font </strong>${renderer.render(`{@spell ${b.font}}`)}</p>
+			<p class="pf2-book__option"><strong>Divine Skill </strong>${renderer.render(`{@skill ${b.skill}}`)}</p>
+			<p class="pf2-book__option"><strong>Favored Weapon </strong>${renderer.render(`{@item ${b.weapon}}`)}</p>
+			<p class="pf2-book__option"><strong>Domains </strong>${renderer.render(b.domains.join(", "))}</p>
+			<p class="pf2-book__option"><strong>Cleric Spells </strong>${renderer.render(Renderer.deity.getClericSpells(b.spells))}</p>
+			${b.alternateDomains ? `<p class="pf2-book__option"><strong>Alternate Domains </strong>${renderer.render(b.domains.join(", "))}</p>` : ""}
+			${b.ability ? `<p class="pf2-book__option"><strong>Divine Ability </strong>${renderer.render(b.ability.entry)}</p>` : ""}`;
 	},
 
 	getRenderedLore (deity) {
@@ -8791,6 +8811,8 @@ Renderer._stripTagLayer = function (str) {
 					case "@i":
 					case "@italic":
 					case "@indent":
+					case "@indentFirst":
+					case "@indentSubsequent":
 					case "@s":
 					case "@strike":
 					case "@u":
