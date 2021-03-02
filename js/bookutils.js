@@ -100,7 +100,7 @@ const BookUtil = {
 
 			const displayText = h.header ? `<span class="bk-contents__sub_spacer--1">\u2013</span>${h.header}` : h; // handle entries with depth
 			out += `<li class="lst--border">
-				<a href="${addPrefix || ""}#${bookId},${chapterIndex},${UrlUtil.encodeForHash(headerText)}${headerPos > 0 ? `,${headerPos}` : ""}" data-book="${bookId}" data-chapter="${chapterIndex}" data-header="${headerText.escapeQuotes()}" ${addOnclick ? `onclick="BookUtil.scrollClick('${headerText.escapeQuotes()}', ${headerPos}, this)"` : ""}>${displayText}</a>
+				<a href="${addPrefix || ""}#${bookId},${chapterIndex},${UrlUtil.encodeForHash(headerText)},${headerPos}" data-book="${bookId}" data-chapter="${chapterIndex}" data-header="${headerText.escapeQuotes()}" ${addOnclick ? `onclick="BookUtil.scrollClick('${headerText.escapeQuotes()}', ${headerPos}, this)"` : ""}>${displayText}</a>
 			</li>`;
 		});
 
@@ -254,7 +254,7 @@ const BookUtil = {
 			BookUtil.renderArea.html("");
 
 			const chapterTitle = (fromIndex.contents[chapter] || {}).name;
-			document.title = `${chapterTitle ? `${chapterTitle} - ` : ""}${fromIndex.name} - PF2eTools`;
+			document.title = `${chapterTitle ? `${chapterTitle} - ` : ""}${fromIndex.name} - Pf2eTools`;
 
 			const goToPage = (mod, isGetHref) => {
 				const getHashPart = () => {
@@ -543,7 +543,7 @@ const BookUtil = {
 		}
 
 		async function pHandleFound (fromIndex, homebrewData) {
-			document.title = `${fromIndex.name} - PF2eTools`;
+			document.title = `${fromIndex.name} - Pf2eTools`;
 			$(`.book-head-header`).html(cleanName(fromIndex.name));
 			$(`.book-head-message`).html("Browse content. Press F to find, and G to go to page.");
 			await BookUtil.pLoadBook(fromIndex, bookId, hashParts, homebrewData);
