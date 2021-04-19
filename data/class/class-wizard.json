@@ -4,7 +4,7 @@
 			"name": "Wizard",
 			"source": "CRB",
 			"page": 203,
-			"HP": 6,
+			"hp": 6,
 			"keyAbility": "Intelligence",
 			"initialProficiencies": {
 				"perception": "T",
@@ -343,7 +343,17 @@
 						}
 					]
 				}
-			]
+			],
+			"summary": {
+				"text": "The wizard is a scholar whose reservoirs of arcane knowledge powers their wondrous spells and abilities.",
+				"images": [
+					"img/classes/CRB/wizard-l.webp",
+					"img/classes/CRB/wizard-conjurer.webp",
+					"img/classes/CRB/wizard-illusionist.webp"
+				],
+				"keyAbility": "Intelligence",
+				"sndAbility": "Dexterity, Constitution"
+			}
 		}
 	],
 	"classFeature": [
@@ -396,7 +406,7 @@
 					"page": 204,
 					"name": "Cantrips",
 					"entries": [
-						"A cantrip is a special type of spell that doesn’t use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up—this is usually equal to the highest level of spell you can cast as a wizard. For example, as a 1st-level wizard, your cantrips are 1st-level spells, and as a 5th-level wizard, your cantrips are 3rd-level spells."
+						"A cantrip is a special type of spell that doesn’t use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up—this is usually equal to the highest level of wizard spell slot you have. For example, as a 1st-level wizard, your cantrips are 1st-level spells, and as a 5th-level wizard, your cantrips are 3rd-level spells."
 					]
 				},
 				{
@@ -451,7 +461,7 @@
 						"text-center",
 						"text-center"
 					],
-					
+
 					"footnotes": [
 						"* The archwizard’s spellcraft class feature gives you a 10th-level spell slot that works a bit differently from other spell slots."
 					],

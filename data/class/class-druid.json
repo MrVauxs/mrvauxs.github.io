@@ -4,7 +4,7 @@
 			"name": "Druid",
 			"source": "CRB",
 			"page": 129,
-			"HP": 8,
+			"hp": 8,
 			"keyAbility": "Wisdom",
 			"initialProficiencies": {
 				"perception": "T",
@@ -232,7 +232,17 @@
 						}
 					]
 				}
-			]
+			],
+			"summary": {
+				"text": "The druid uses the magic of the natural world to bolster allies and strike down enemies.",
+				"images": [
+					"img/classes/CRB/druid-l.webp",
+					"img/classes/CRB/druid-storm-druid.webp",
+					"img/classes/CRB/druid-wild-druid.webp"
+				],
+				"keyAbility": "Wisdom",
+				"sndAbility": "Constitution, Dexterity"
+			}
 		}
 	],
 	"classFeature": [
@@ -283,7 +293,7 @@
 					"page": 130,
 					"name": "Cantrips",
 					"entries": [
-						"Some of your spells are cantrips. A cantrip is a special type of spell that doesn't use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is automatically heightened to half your level rounded up—this is usually equal to the highest level of druid spell slot you have. For example, as a 1st-level druid, your cantrips are 1st-level spells, and as a 5th-level druid, your cantrips are 3rd-level spells."
+						"A cantrip is a special type of spell that doesn’t use spell slots. You can cast a cantrip at will, any number of times per day. A cantrip is always automatically heightened to half your level rounded up—this is usually equal to the highest level of druid spell slot you have. For example, as a 1st-level druid, your cantrips are 1st-level spells, and as a 5th-level druid, your cantrips are 3rd-level spells."
 					]
 				},
 				{
@@ -327,7 +337,7 @@
 						"text-center",
 						"text-center"
 					],
-					
+
 					"footnotes": [
 						"* The primal hierophant class feature gives you a 10th-level spell slot that works a bit differently from other spell slots."
 					],
